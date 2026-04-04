@@ -124,7 +124,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS=[
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'https://place-rec-app-pi.vercel.app'
+
 ]
 
 REST_FRAMEWORK = {
