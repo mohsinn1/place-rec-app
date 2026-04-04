@@ -59,8 +59,8 @@ def get_places(request):
     overpass_query = f"""
     [out:json][timeout:10];
     (
-      node["{key}"="{val}"](around:8000,{user_lat},{user_lng});
-      way["{key}"="{val}"](around:8000,{user_lat},{user_lng});
+      node["{key}"="{val}"](around:12000,{user_lat},{user_lng});
+      way["{key}"="{val}"](around:12000,{user_lat},{user_lng});
     );
     out body center 20;
     """

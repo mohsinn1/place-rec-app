@@ -235,3 +235,68 @@ h2 {
 .filters select:focus {
   border-color: rgba(0, 170, 255, 0.5);
 }
+
+/* Mobile Responsiveness - The fix for your phone! */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 2.2rem !important; /* Shrink the large vibe text */
+    padding-top: 40px;
+    padding-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    padding-top: 15px;
+  }
+
+  .mood-selector {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .mood-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 10px;
+  }
+
+  .mood-btn {
+    padding: 12px;
+    flex-direction: column; /* Stack icon and text */
+    align-items: center;
+    text-align: center;
+  }
+
+  .mood-text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .mood-icon {
+    padding-bottom: 5px;
+    font-size: 24px;
+  }
+
+  .mood-desc {
+    display: none; /* Hide the long descriptions to save space */
+  }
+
+  .map {
+    height: 300px; /* Shorter map for easier scrolling */
+    width: 92%;
+  }
+
+  .places-list {
+    grid-template-columns: 1fr; /* 1 column for places */
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .place-card {
+    padding: 16px;
+  }
+
+  .filters {
+    padding: 30px 15px 10px 15px;
+    gap: 8px;
+  }
+}
