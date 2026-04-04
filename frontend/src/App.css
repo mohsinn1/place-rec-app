@@ -1,0 +1,233 @@
+.app {
+  background-color: #0a0a0f;
+  color: #fff;
+  min-height: 100svh;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.title {
+  padding-top: 60px;
+}
+
+.map {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 50%;
+}
+
+
+h3 {
+  font-size: 2rem;
+  padding-top: 30px;
+  font-weight: 60;
+  color: rgba(255, 255, 255, 0.4);
+
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1;
+  padding-top: 60px;
+  padding-bottom: 20px;
+}
+
+.cyan-text {
+  color: rgba(0, 170, 255);
+  font-weight: 700;
+}
+
+.mood-selector {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.mood-btn {
+  background: #1a1a2e;
+  border-radius: 20px;
+  padding: 24px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mood-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.mood-btn:hover {
+  border-color: rgba(0, 170, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.mood-btn.active {
+  border-color: rgba(0, 170, 255, 0.5);
+  background: rgba(0, 170, 255, 0.2);
+}
+
+.mood-icon {
+  padding-bottom: 8px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s ease;
+}
+
+.mood-btn.active .mood-icon {
+  color: rgba(0, 170, 255)
+}
+
+.mood-label {
+  color: #fff;
+  font-size: 1.2rem;
+  padding-bottom: 4px;
+}
+
+.mood-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.selected-text {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
+
+.places-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 20px 50px;
+}
+
+.place-card {
+  background: #1a1a2e;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-color: rgba(0, 170, 255, 0.3);
+}
+
+
+
+.place-name {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.place-info {
+  width: 100%;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
+}
+
+.info-value {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.status-open {
+  color: rgba(0, 170, 255);
+}
+
+.status-closed {
+  color: #fff;
+}
+
+.stars {
+  color: rgba(0, 170, 255);
+  margin-right: 6px;
+}
+
+
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 50px 20px 50px;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  background: #1a1a2e;
+  border-radius: 40px;
+  padding: 16px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filters button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(0, 170, 255, 0.5);
+}
+
+.filters button.active {
+  background: rgba(0, 170, 255, 0.2);
+  border-color: rgba(0, 170, 255, 0.8);
+  color: #fff;
+}
+
+
+.filters button.active-filter {
+  background: rgba(0, 170, 255, 0.2);
+  border-color: rgba(0, 170, 255, 0.8);
+  color: rgba(0, 170, 255);
+}
+
+.filters select {
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  /* removes default focus ring */
+}
+
+.filters select:focus {
+  border-color: rgba(0, 170, 255, 0.5);
+}
