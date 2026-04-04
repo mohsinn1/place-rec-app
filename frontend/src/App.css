@@ -11,9 +11,13 @@
 }
 
 .map {
-  margin-left: 20%;
-  margin-right: 20%;
-  height: 50%;
+  width: 95%;
+  max-width: 1000px;
+  margin: 20px auto;
+  height: 400px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 
