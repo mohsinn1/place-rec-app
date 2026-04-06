@@ -69,9 +69,9 @@ def get_places(request):
     headers = {
         "User-Agent" : "PlaceRecApp/1.0"
     }
-    timeout = 15
+    
 
-    response = requests.post(url = url,data = overpass_query, headers = headers, timeout = timeout)
+    response = requests.post(url = url,data = overpass_query, headers = headers)
     data = response.json()
     
 
