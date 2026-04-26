@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 function PlacesList({ selectedMood, position }) {
@@ -33,22 +35,20 @@ function PlacesList({ selectedMood, position }) {
             {isLoading ? (
                 // Render skeleton cards while loading
                 [...Array(4)].map((_, index) => (
-                    <div className="skeleton-card" key={`skeleton-${index}`}>
-                        <div className="skeleton-title"></div>
-                        <div className="place-info">
-                            <div className="skeleton-info-row">
-                                <div className="skeleton-info-label"></div>
-                                <div className="skeleton-info-value"></div>
+                    <div className="place-card" style={{ cursor: 'default' }} key={`skeleton-${index}`}>
+                        <SkeletonTheme baseColor="#2a2a40" highlightColor="#3a3a5a">
+                            <div style={{ width: '50%', marginBottom: '16px' }}>
+                                <Skeleton height={24} borderRadius={12} />
                             </div>
-                            <div className="skeleton-info-row">
-                                <div className="skeleton-info-label"></div>
-                                <div className="skeleton-info-value"></div>
+                            <div className="place-info">
+                                {[1, 2, 3].map(i => (
+                                    <div className="info-row" key={i}>
+                                        <Skeleton width={80} height={16} />
+                                        <Skeleton width={100} height={16} />
+                                    </div>
+                                ))}
                             </div>
-                            <div className="skeleton-info-row">
-                                <div className="skeleton-info-label"></div>
-                                <div className="skeleton-info-value"></div>
-                            </div>
-                        </div>
+                        </SkeletonTheme>
                     </div>
                 ))
             ) : (

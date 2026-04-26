@@ -32,7 +32,7 @@ function MoodSelector({ selectedMood, onMoodSelect }) {
             {
                 selectedMood && (
                     <p className="selected-text">
-                        Selected: <span className='cyan-text'>{selectedMood}</span>
+                        Selected: <span className='selected-mood'>{selectedMood}</span>
                     </p>
                 )
             }

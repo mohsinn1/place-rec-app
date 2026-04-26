@@ -4,6 +4,7 @@
   min-height: 100svh;
   width: 100%;
   font-family: 'Inter', sans-serif;
+  font-style: italic;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -78,8 +79,13 @@ h2 {
 }
 
 .cyan-text {
-  color: rgba(0, 170, 255);
+  background: linear-gradient(to right, #a0dfff, #00aaff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
   font-weight: 700;
+  filter: drop-shadow(-0.2px -0.5px 0px rgba(255, 255, 255));
 }
 
 .mood-selector {
@@ -173,71 +179,7 @@ h2 {
   text-align: center;
 }
 
-/* Skeleton Loading Animation - Modern SaaS Shimmer */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
 
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.skeleton-card {
-  background: #1a1a2e;
-  border-radius: 20px;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 180px;
-  position: relative;
-  overflow: hidden;
-}
-
-.skeleton-title,
-.skeleton-info-label,
-.skeleton-info-value {
-  background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0.04) 25%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0.04) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite linear;
-}
-
-.skeleton-title {
-  width: 50%;
-  height: 20px;
-  border-radius: 10px;
-  margin-bottom: 26px;
-}
-
-.skeleton-info-row {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.skeleton-info-row:last-child {
-  border-bottom: none;
-}
-
-.skeleton-info-label {
-  width: 25%;
-  height: 14px;
-  border-radius: 4px;
-}
-
-.skeleton-info-value {
-  width: 35%;
-  height: 14px;
-  border-radius: 4px;
-}
 
 .place-info {
   width: 100%;
@@ -402,4 +344,9 @@ h2 {
     padding: 30px 15px 10px 15px;
     gap: 8px;
   }
+}
+
+.selected-mood {
+  color: rgba(0, 170, 255);
+  font-weight: 700;
 }
