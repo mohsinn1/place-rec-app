@@ -14,7 +14,6 @@ const moods = [
 function MoodSelector({ selectedMood, onMoodSelect }) {
     return (
         <div className='mood-selector'>
-            <h2>What's your <br /> <span className='cyan-text'>vibe</span> today?</h2>
             <div className='mood-grid'>
                 {moods.map((mood) => (
                     <button

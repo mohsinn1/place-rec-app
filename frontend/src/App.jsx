@@ -22,7 +22,7 @@ function App() {
   }, [])
   return (
     <div className='app'>
-      <h1 className='title'>Place Recommendation</h1>
+      <h2>What's your <br /> <span className='cyan-text'>vibe</span> today?</h2>
       <h3>Decide Where To Go</h3>
       <MoodSelector selectedMood={selectedMood} onMoodSelect={setSelectedMood} />
       <MapView position={position} error={error} />

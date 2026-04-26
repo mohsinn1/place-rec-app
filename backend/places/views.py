@@ -79,6 +79,9 @@ def get_places(request):
     _cache[cache_key] = result
     return Response(result)
 
+@api_view(['GET'])
+def ping(request):
+    return Response({"status": "ok"})
 
 
 def process(elements, user_lat, user_lng, val):

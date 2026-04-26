@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('nearby/', views.get_places, name='get_places'),
+    path('ping/', views.ping, name='ping'),
 ]

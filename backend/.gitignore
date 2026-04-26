@@ -2,9 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-backend/.env
-backend/db.sqlite3
-backend/staticfiles/
+.env
+db.sqlite3
+staticfiles/
 
 # Node / React
 node_modules/
