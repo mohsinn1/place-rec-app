@@ -1,14 +1,13 @@
-import { LuCoffee, LuTrees, LuFilm } from 'react-icons/lu'
-import { MdFamilyRestroom } from 'react-icons/md'
+import { LuCoffee, LuFilm } from 'react-icons/lu'
+import { MdOutlinePark, MdOutlineFastfood, MdOutlineNightlight } from 'react-icons/md'
 import { GiLoveLetter } from "react-icons/gi";
-import { IoFastFoodOutline } from "react-icons/io5";
 
 const moods = [
     { id: 'cafes', icon: LuCoffee, label: 'Cafes', description: 'Coffee & WiFi' },
     { id: 'foodie', icon: GiLoveLetter, label: 'Foodie', description: 'For the Food Lovers' },
-    { id: 'outdoors', icon: LuTrees, label: 'Outdoors', description: 'Parks & Nature' },
-    { id: 'fast_food', icon: IoFastFoodOutline, label: 'Fast Food', description: 'Quick Bites' },
-    { id: 'chill', icon: LuFilm, label: 'Chill', description: 'Movies & Relaxation' },
+    { id: 'outdoors', icon: MdOutlinePark, label: 'Outdoors', description: 'Parks & Nature' },
+    { id: 'fast_food', icon: MdOutlineFastfood, label: 'Fast Food', description: 'Quick Bites' },
+    { id: 'chill', icon: MdOutlineNightlight, label: 'Chill', description: 'Movies & Relaxation' },
 ]
 
 function MoodSelector({ selectedMood, onMoodSelect }) {
@@ -25,7 +24,7 @@ function MoodSelector({ selectedMood, onMoodSelect }) {
                             <span className='mood-label'>{mood.label}</span>
                             <span className='mood-desc'>{mood.description}</span>
                         </div>
-                        <mood.icon className='mood-icon' size={30} />
+                        <mood.icon className='mood-icon' size={35} />
                     </button>
                 ))}
             </div>
