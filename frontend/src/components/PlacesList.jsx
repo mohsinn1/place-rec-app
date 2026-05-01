@@ -119,7 +119,7 @@ function PlacesList({ selectedMood, position }) {
                 }
             </div >
 
-            {hasMore && !isLoading && (
+            {hasMore && !isLoading && places.length > 0 && (
                 <div className="load-more-container">
                     <button 
                         className="load-more-btn" 
