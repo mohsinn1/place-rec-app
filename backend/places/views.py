@@ -63,13 +63,13 @@ def get_places(request):
     # Fetch from Overpass only if not in cache
     if cache_key not in _cache:
         overpass_query = f"""
-        [out:json][timeout:10];
-        (
-          node["{key}"="{val}"](around:9000,{user_lat},{user_lng});
-          way["{key}"="{val}"](around:9000,{user_lat},{user_lng});
-        );
-        out body center 20;
-        """
+    [out:json];
+    (
+      node["{key}"="{val}"](around:9000,{user_lat},{user_lng});
+      way["{key}"="{val}"](around:9000,{user_lat},{user_lng});
+    );
+    out body center 20;
+    """
 
         url = 'https://overpass.kumi.systems/api/interpreter'
         headers = {"User-Agent": "PlaceRecApp/1.0"}
@@ -97,42 +97,38 @@ def ping(request):
 
 
 def process(elements, user_lat, user_lng, val):
-    if not elements:
-        return []
+    processed_places = []
     
-    first = elements[0]
-    rest = process(elements[1:], user_lat,user_lng, val)
+    for element in elements:
+        tags = element.get('tags', {})
+        name = tags.get('name', '')
+        
+        if not name:
+            continue
 
-    tags = first.get('tags',{})
-    name = tags.get('name','')
+        if element.get('type') == 'node':
+            element_lat = element.get('lat')
+            element_lng = element.get('lon')
+        else:
+            element_lat = element.get('center', {}).get('lat')
+            element_lng = element.get('center', {}).get('lon')
 
-    if not name:
-        return rest
+        if not element_lat or not element_lng:
+            continue
 
-    if first.get('type') == 'node':
-        element_lat = first.get('lat')
-        element_lng = first.get('lon')
+        id = element.get('id')
+        distance = haversine_distance(user_lat, user_lng, element_lat, element_lng)
+        
+        street = tags.get('addr:street', '')
+        city = tags.get('addr:city', '')
+        address = f"{street}, {city}".strip(', ') or "Address Unavailable"
 
-    else:
-        element_lat = first.get('center',{}).get('lat')
-        element_lng = first.get('center',{}).get('lon')
+        processed_places.append({
+            'id': id,
+            'name': name,
+            'type': val.replace('_', " ").title(),
+            'distance': distance,
+            'address': address
+        })
 
-    if not element_lat or not element_lng:
-        return rest
-
-    id = first.get('id')
-    distance = haversine_distance(user_lat,user_lng,element_lat,element_lng)
-    street = tags.get('addr:street','')
-    city = tags.get('addr:city','')
-    address = f"{street}, {city}".strip(', ') or "Address Unavailable"
-
-    place = {
-        'id' : id,
-        'name' : name,
-        'type' : val.replace('_', " ").title(),
-        'distance' : distance,
-        'address' : address
-    }
-
-
-    return [place] + rest
+    return processed_places
