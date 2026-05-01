@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LuMapPin, LuArrowDownAZ } from "react-icons/lu";
+import { LuMapPin, LuArrowDownAZ, LuPlus } from "react-icons/lu";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001';
@@ -8,29 +8,53 @@ function PlacesList({ selectedMood, position }) {
     const [places, setPlaces] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [sort, setSort] = useState('distance')
+    const [page, setPage] = useState(1)
+    const [hasMore, setHasMore] = useState(true)
+    const [isFetchingMore, setIsFetchingMore] = useState(false)
 
+
+    // Reset page to 1 when mood or location changes
     useEffect(() => {
-        if (!selectedMood || !position) {
-            return;
+        setPage(1);
+        setHasMore(true);
+    }, [selectedMood, position]);
+
+    // Main fetcher
+    useEffect(() => {
+        if (!selectedMood || !position) return;
+
+        const controller = new AbortController();
+        
+        if (page === 1) {
+            setIsLoading(true);
+            setPlaces([]); // Clear list visually for new mood
+        } else {
+            setIsFetchingMore(true);
         }
-        setIsLoading(true);
-        fetch(`${API_BASE}/api/places/nearby/?mood=${selectedMood}&lat=${position[0]}&lng=${position[1]}`)
+
+        fetch(`${API_BASE}/api/places/nearby/?mood=${selectedMood}&lat=${position[0]}&lng=${position[1]}&page=${page}&limit=4`, {
+            signal: controller.signal
+        })
             .then(res => res.json())
             .then(data => {
-                if (Array.isArray(data)) {
-                    setPlaces(data);
-                } else {
-                    console.error("Backend Error:", data.error);
-                    setPlaces([]); // Clear the list if there's an error!
+                if (data.places) {
+                    setHasMore(data.has_more);
+                    // REPLACE on page 1, APPEND on page > 1
+                    setPlaces(prev => page === 1 ? data.places : [...prev, ...data.places]);
                 }
                 setIsLoading(false);
+                setIsFetchingMore(false);
             })
             .catch(err => {
+                if (err.name === 'AbortError') return;
                 console.error("Fetch Error:", err);
                 setIsLoading(false);
-                setPlaces([]);
+                setIsFetchingMore(false);
             });
-    }, [selectedMood, position])
+
+        return () => controller.abort();
+    }, [selectedMood, position, page]);
+
 
     const sorted_places = [...places].sort((a, b) => sort === 'alphabetical' ? a.name.localeCompare(b.name) : a.distance - b.distance)
 
@@ -93,7 +117,27 @@ function PlacesList({ selectedMood, position }) {
                         ))
                     )
                 }
-            </div ></>
+            </div >
+
+            {hasMore && !isLoading && (
+                <div className="load-more-container">
+                    <button 
+                        className="load-more-btn" 
+                        onClick={() => setPage(prev => prev + 1)}
+                        disabled={isFetchingMore}
+                    >
+                        {isFetchingMore ? (
+                            "Loading..."
+                        ) : (
+                            <>
+                                <LuPlus size={18} />
+                                Load More
+                            </>
+                        )}
+                    </button>
+                </div>
+            )}
+        </>
     );
 }
 

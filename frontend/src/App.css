@@ -341,3 +341,44 @@ h2 {
   color: rgba(0, 170, 255);
   font-weight: 700;
 }
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.load-more-btn {
+  background: #1a1a2e;
+  border-radius: 40px;
+  padding: 14px 32px;
+  border: 1px solid rgba(0, 170, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.load-more-btn:hover:not(:disabled) {
+  background: rgba(0, 170, 255, 0.1);
+  border-color: rgba(0, 170, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 170, 255, 0.15);
+}
+
+.load-more-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+}

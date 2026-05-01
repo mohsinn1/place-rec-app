@@ -1,8 +1,8 @@
 import './App.css'
 import MoodSelector from './components/MoodSelector'
-import { useState, useEffect } from 'react'
-import MapView from './components/MapView'
-import PlacesList from './components/PlacesList'
+import { useState, useEffect, lazy, Suspense } from 'react'
+const MapView = lazy(() => import('./components/MapView'));
+const PlacesList = lazy(() => import('./components/PlacesList'));
 
 
 function App() {
@@ -25,8 +25,8 @@ function App() {
       <h2>What's your <br /> <span className='cyan-text'>vibe</span> today?</h2>
       <h3>Decide Where To Go</h3>
       <MoodSelector selectedMood={selectedMood} onMoodSelect={setSelectedMood} />
-      <MapView position={position} error={error} />
-      <PlacesList selectedMood={selectedMood} position={position} />
+      <Suspense><MapView position={position} error={error} /></Suspense>
+      {selectedMood && <Suspense><PlacesList selectedMood={selectedMood} position={position} /></Suspense>}
     </div>
   )
 }

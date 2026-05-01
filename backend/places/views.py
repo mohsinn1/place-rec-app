@@ -30,9 +30,15 @@ def get_places(request):
     places = []
 
     mood = request.query_params.get('mood', None)
-    filter = request.query_params.get('filter', None)
+    try:
+        page = int(request.query_params.get('page', 1))
+        limit = int(request.query_params.get('limit', 4))
+    except:
+        return Response({'error': 'Page does not exist'}, status = 400)
     lat  = request.query_params.get('lat', None)
     lng  = request.query_params.get('lng', None)
+    start_index = (page-1)*limit
+    end_index = start_index + limit
 
     if not lat or not lng:
         return Response({'error': 'Missing latitude or longitude'}, status=400)
@@ -53,31 +59,37 @@ def get_places(request):
     
     key, val = tag
     cache_key = f"{mood_key}_{round(user_lat, 3)}_{round(user_lng, 3)}"
-    if cache_key in _cache:
-        return Response(_cache[cache_key])
-
-    overpass_query = f"""
-    [out:json][timeout:10];
-    (
-      node["{key}"="{val}"](around:9000,{user_lat},{user_lng});
-      way["{key}"="{val}"](around:9000,{user_lat},{user_lng});
-    );
-    out body center 20;
-    """
-
-    url = 'https://overpass.kumi.systems/api/interpreter'
-    headers = {
-        "User-Agent" : "PlaceRecApp/1.0"
-    }
     
+    # Fetch from Overpass only if not in cache
+    if cache_key not in _cache:
+        overpass_query = f"""
+        [out:json][timeout:10];
+        (
+          node["{key}"="{val}"](around:9000,{user_lat},{user_lng});
+          way["{key}"="{val}"](around:9000,{user_lat},{user_lng});
+        );
+        out body center 20;
+        """
 
-    response = requests.post(url = url,data = overpass_query, headers = headers)
-    data = response.json()
+        url = 'https://overpass.kumi.systems/api/interpreter'
+        headers = {"User-Agent": "PlaceRecApp/1.0"}
+        
+        try:
+            response = requests.post(url=url, data=overpass_query, headers=headers)
+            data = response.json()
+            _cache[cache_key] = process(data.get('elements', []), user_lat, user_lng, val)
+        except Exception as e:
+            return Response({'error': f'Failed to fetch data: {str(e)}'}, status=500)
+
+    # Always pull from cache
+    full_result = _cache[cache_key]
+    paginated_result = full_result[start_index:end_index]
     
-
-    result = process(data.get('elements',[]), user_lat, user_lng,val)
-    _cache[cache_key] = result
-    return Response(result)
+    return Response({
+        'places': paginated_result,
+        'has_more': end_index < len(full_result),
+        'total_count': len(full_result)
+    })
 
 @api_view(['GET'])
 def ping(request):
